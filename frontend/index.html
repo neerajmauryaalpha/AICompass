@@ -1,1 +1,46 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+<title>AICompass</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="animations.css">
+</head>
+ 
+<body>
+ 
+<header class="header glass">
+  <h1>🧠 AICompass</h1>
+  <button onclick="toggleDark()">🌙</button>
+</header>
+ 
+<section class="news">
+  <div class="card">
+    <img src="assets/ai.jpg">
+    <h2>AI Revolution</h2>
+    <p>AI is transforming industries globally.</p>
+  </div>
+ 
+  <div class="card">
+    <img src="assets/bias.jpg">
+    <h2>AI Bias</h2>
+    <p>Bias leads to unfair AI decisions.</p>
+  </div>
+ 
+  <div class="card">
+    <img src="assets/ethics.jpg">
+    <h2>AI Ethics</h2>
+    <p>Ethics ensures safe AI usage.</p>
+  </div>
+</section>
+ 
+<section class="chat">
+  <div id="chat-box"></div>
+ 
+  <input id="input" placeholder="Ask about AI...">
+  <button onclick="sendMessage()">Send</button>
+</section>
+ 
+<script src="script.js"></script>
+</body>
+</html>
+ 
