@@ -1,56 +1,53 @@
-// 🔗 IMPORTANT: Replace this with your Render backend URL
-const API_URL = "https://aicompass-a9mn.onrender.com";
+const API_URL = "https://mpass-a9mn.onrender.com";
  
-// 📩 Send message function
+function typeEffect(text, element) {
+    let i = 0;
+    function typing() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, 20);
+        }
+    }
+    typing();
+}
+ 
 function sendMessage() {
     let input = document.getElementById("input");
     let msg = input.value.trim();
- 
     if (!msg) return;
  
     let chatBox = document.getElementById("chat-box");
  
-    // Show user message
     chatBox.innerHTML += `<p class="user">${msg}</p>`;
  
-    // Call backend API
     fetch(API_URL + "/chat", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            message: msg,
-            user: "demo"
-        })
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: msg, user: "demo"})
     })
     .then(res => res.json())
     .then(data => {
-        chatBox.innerHTML += `<p class="bot">${data.reply}</p>`;
-        chatBox.scrollTop = chatBox.scrollHeight; // auto scroll
-    })
-    .catch(err => {
-        chatBox.innerHTML += `<p class="bot">⚠️ Error connecting to server</p>`;
-        console.error(err);
+        let botMsg = document.createElement("p");
+        botMsg.className = "bot";
+        chatBox.appendChild(botMsg);
+        typeEffect(data.reply, botMsg);
+        chatBox.scrollTop = chatBox.scrollHeight;
     });
  
-    // Clear input
     input.value = "";
 }
  
-// 🌙 Dark mode toggle
-function toggleDark() {
-    document.body.classList.toggle("dark");
+function quickAsk(text) {
+    document.getElementById("input").value = text;
+    sendMessage();
 }
  
-// ⌨️ Enter key support
-document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("input");
- 
-    input.addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-            sendMessage();
-        }
-    });
-});
- 
+// 🎤 Voice input
+function startVoice() {
+    let recognition = new webkitSpeechRecognition();
+    recognition.onresult = function(event) {
+        document.getElementById("input").value = event.results[0][0].transcript;
+    };
+    recognition.start();
+}
