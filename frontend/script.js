@@ -1,4 +1,4 @@
-const API_URL = "https://aicompass-a9mn.onrender.com";
+const API_URL = "http://127.0.0.1:5000";
  
 function sendMessage() {
     let input = document.getElementById("input");
